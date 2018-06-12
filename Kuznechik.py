@@ -64,7 +64,7 @@ def GOST_Kuzn_R(state):
     result = [0 for i in range(16)]
     i = 15
     elem15 = 0
-    while i > 0:
+    while i >= 0:
         result[i - 1] = state[i]
         elem15 ^= galoisMult(state[i], l_vector[i])
         i -= 1
@@ -92,7 +92,16 @@ def GOST_Kuzn_invertL(arr):
         temp = GOST_Kuzn_invertR(temp)
     return temp
 
-#def expandKeys(masterkey):
+def GOST_GetConstants():
+    res = [[0 for i in range(16)] for i in range(32)]
+    temp = []
+    for i in range(32):
+        res[i][0] = i + 1
+    for j in range(32):
+        temp.append(GOST_Kuzn_L(res[j]))
+    return temp
+
 
 print(GOST_Kuzn_L([12,43,12,22,1,2,3,4,6,7,8,9,1,21,12,3]))
 print(GOST_Kuzn_invertL([122, 43, 102, 76,63, 120, 127, 26, 40, 127, 22, 36, 32, 72, 97, 127]))
+print(GOST_GetConstants())
